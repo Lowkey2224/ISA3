@@ -36,7 +36,7 @@ public class TurnImpl implements Turn{
     }
 
 
-    public boolean equal(Object o)
+    public boolean equals(Object o)
     {
         if (o == null){
             return false;
