@@ -72,8 +72,18 @@ public class BoardImpl implements Board {
 
     @Override
     public Set<Board> getNextPosibleStates() {
-//        Set<Board> set = new HashSet<Board>();
-        return null;
+        Set<Board> set = new HashSet<Board>();
+        Color c = (lastTurn.getColor() == Color.WHITE)?Color.BLACK: Color.WHITE;
+        for (int i = 0; i < this.boardSize; i++) {
+            for (int j = 0; j < this.boardSize; j++) {
+                if (this.tiles[i][j] == Color.EMPTY) {
+                    Board b = new BoardImpl(this.boardSize, this.tiles);
+                    b.setStone(c, i,j);
+                    set.add(b);
+                }
+            }
+        }
+        return set;
     }
 
     @Override
