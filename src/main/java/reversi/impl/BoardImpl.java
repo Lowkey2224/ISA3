@@ -98,6 +98,19 @@ public class BoardImpl implements Board {
         return amount;
     }
 
+    @Override
+    public int getBoardSize() {
+        return this.boardSize;
+    }
+
+    @Override
+    public Color getColor(int x, int y) {
+        if (x < 0 || x > this.boardSize || y < 0 || y > this.boardSize) {
+            return null;
+        }
+        return this.tiles[x][y];
+    }
+
     private boolean isTurnValid(Turn t)
     {
         if (t.getX() < 0 || t.getX() > this.boardSize || t.getY() < 0 || t.getY() > this.boardSize) {

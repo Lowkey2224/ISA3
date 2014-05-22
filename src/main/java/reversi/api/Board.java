@@ -26,4 +26,8 @@ public interface Board {
 
     public int getNumberOfStones(Color color);
 
+    public int getBoardSize();
+
+    public Color getColor(int x, int y);
+
 }
