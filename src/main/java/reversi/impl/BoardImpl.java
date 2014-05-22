@@ -18,9 +18,9 @@ public class BoardImpl implements Board{
     {
         this.tiles = new Color[boardSize][boardSize];
         this.boardSize = boardSize;
-        for (int i = 0; i< boardSize; i++)
+        for (int i = 0; i< this.boardSize; i++)
         {
-            for(int j = 0; j < boardSize;  j++)
+            for(int j = 0; j < this.boardSize;  j++)
             {
                 tiles[i][j]= Color.EMPTY;
             }
@@ -29,7 +29,19 @@ public class BoardImpl implements Board{
 
     @Override
     public boolean setStone(Color color, int x, int y) {
-        return false;
+        if(x <0 || x > this.boardSize || y < 0 || y > this.boardSize)
+        {
+            return false;
+        }
+        if (this.tiles[x][y] != Color.EMPTY)
+        {
+            return false;
+        }else{
+            this.tiles[x][y] = color;
+            return true;
+        }
+
+
     }
 
     @Override
