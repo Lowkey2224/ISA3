@@ -39,14 +39,13 @@ public class BoardImpl implements Board {
     }
 
     @Override
-    public boolean setStone(Color color, int x, int y) {
-        if (x < 0 || x > this.boardSize || y < 0 || y > this.boardSize) {
+    public boolean setStone(Color color, int x, int y)
+    {
+        Turn t = new TurnImpl(x, y, color);
+        if(!this.isTurnValid(t))
+        {
             return false;
         }
-        if (this.tiles[x][y] != Color.EMPTY) {
-            return false;
-        }
-
         this.tiles[x][y] = color;
         //Change Color of adjacent tiles.
         for(int i = x-1; i <= x+1; i++)
@@ -61,7 +60,7 @@ public class BoardImpl implements Board {
                 }
             }
         }
-        this.lastTurn = new TurnImpl(x, y, color);
+        this.lastTurn = t;
         return true;
     }
 
@@ -97,6 +96,17 @@ public class BoardImpl implements Board {
             }
         }
         return amount;
+    }
+
+    private boolean isTurnValid(Turn t)
+    {
+        if (t.getX() < 0 || t.getX() > this.boardSize || t.getY() < 0 || t.getY() > this.boardSize) {
+            return false;
+        }
+        if (this.tiles[t.getX()][t.getY()] != Color.EMPTY) {
+            return false;
+        }
+        return true;
     }
 
     @Override
