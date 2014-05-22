@@ -20,6 +20,10 @@ public interface Board {
 
     public Set<Board> getNextPosibleStates();
 
+    public Turn getLastTurn();
+
+    // public boolean endOfGame();
+
     public int getNumberOfStones(Color color);
 
 }
