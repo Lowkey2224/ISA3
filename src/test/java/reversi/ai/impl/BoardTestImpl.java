@@ -56,4 +56,16 @@ public class BoardTestImpl implements Board {
 	return "BoardTestImpl [name=" + name + "]";
     }
 
+    @Override
+    public int getBoardSize() {
+	// TODO Auto-generated method stub
+	return 0;
+    }
+
+    @Override
+    public Color getColor(int x, int y) {
+	// TODO Auto-generated method stub
+	return null;
+    }
+
 }
