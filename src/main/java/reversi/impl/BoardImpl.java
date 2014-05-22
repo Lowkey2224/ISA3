@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import reversi.ai.Heuristic;
+import reversi.ai.Heuristicable;
 import reversi.api.Board;
 import reversi.api.Color;
 import reversi.api.Turn;
@@ -11,11 +13,12 @@ import reversi.api.Turn;
 /**
  * Created by Loki on 22.05.2014.
  */
-public class BoardImpl implements Board {
+public class BoardImpl implements Board, Heuristicable {
 
     private Color[][] tiles;
     private int boardSize;
     private Turn lastTurn;
+    private Heuristic heuristic;
 
     public BoardImpl(int boardSize) {
         this.tiles = new Color[boardSize][boardSize];
@@ -133,13 +136,29 @@ public class BoardImpl implements Board {
             return false;
         }
         if(o instanceof Board){
-            Turn t = (Turn) o;
-            //TODO Werteueberpruefung!
-//            if(t.getColor() == this.color && t.getX() == this.x && t.getY() == this.y)
-//            {
-//                return true;
-//            }
+            Board b = (Board) o;
+            if(this.boardSize != b.getBoardSize()){
+                return false;
+            }
+            for (int x = 0; x < this.boardSize; x++) {
+                for (int y = 0; y < this.boardSize; y++) {
+                    if (this.tiles[x][y] != b.getColor(x,y)) {
+                        return false;
+                    }
+                }
+            }
         }
-        return false;
+        return true;
+    }
+
+    @Override
+    public void setHeuristic(Heuristic h) {
+        this.heuristic = h;
+    }
+
+    @Override
+    public int getValue() {
+        //TODO implement
+        return 0;
     }
 }
