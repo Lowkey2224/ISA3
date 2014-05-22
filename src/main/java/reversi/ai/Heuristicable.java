@@ -5,7 +5,7 @@ package reversi.ai;
  */
 public interface Heuristicable {
 
-    public void setHeuristic(Heuristic h);
+    public void setHeuristic(ReversiHeuristic h);
 
     public int getValue();
 }

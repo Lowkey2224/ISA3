@@ -1,10 +1,9 @@
 package reversi.impl;
 
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
-import reversi.ai.Heuristic;
+import reversi.ai.ReversiHeuristic;
 import reversi.ai.Heuristicable;
 import reversi.api.Board;
 import reversi.api.Color;
@@ -18,7 +17,7 @@ public class BoardImpl implements Board, Heuristicable {
     private Color[][] tiles;
     private int boardSize;
     private Turn lastTurn;
-    private Heuristic heuristic;
+    private ReversiHeuristic heuristic;
 
     public BoardImpl(int boardSize) {
         this.tiles = new Color[boardSize][boardSize];
@@ -152,13 +151,12 @@ public class BoardImpl implements Board, Heuristicable {
     }
 
     @Override
-    public void setHeuristic(Heuristic h) {
+    public void setHeuristic(ReversiHeuristic h) {
         this.heuristic = h;
     }
 
     @Override
     public int getValue() {
-        //TODO implement
-        return 0;
+        return this.heuristic.getValue(this);
     }
 }
