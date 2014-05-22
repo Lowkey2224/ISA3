@@ -63,13 +63,17 @@ public class BoardImpl implements Board {
         }
         this.lastTurn = new TurnImpl(x, y, color);
         return true;
+    }
 
-
+    public boolean setStone(Turn turn)
+    {
+        return this.setStone(turn.getColor(), turn.getX(), turn.getY());
     }
 
     @Override
     public Set<Board> getNextPosibleStates() {
-        Set<Board> set = new HashSet<Board>()
+//        Set<Board> set = new HashSet<Board>();
+        return null;
     }
 
     @Override
