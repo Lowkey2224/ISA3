@@ -22,7 +22,7 @@ public class BoardImpl implements Board{
         {
             for(int j = 0; j < this.boardSize;  j++)
             {
-                tiles[i][j]= Color.EMPTY;
+                this.tiles[i][j]= Color.EMPTY;
             }
         }
     }
@@ -51,7 +51,18 @@ public class BoardImpl implements Board{
 
     @Override
     public int getNumberOfStones(Color color) {
-        return 0;
+        int amount = 0;
+        for (int i = 0; i< this.boardSize; i++)
+        {
+            for(int j = 0; j < this.boardSize;  j++)
+            {
+                if (this.tiles[i][j] == color)
+                {
+                    amount++;
+                }
+            }
+        }
+        return amount;
     }
 
     @Override
