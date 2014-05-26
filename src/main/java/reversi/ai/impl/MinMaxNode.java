@@ -35,12 +35,12 @@ public class MinMaxNode {
 	return best;
     }
 
-    private int max(int deep) {
-	if (deep < 0) {
-	    throw new IllegalArgumentException(String.format("positiv value or 0 expected, but was %s", deep));
+    private int max(int depth) {
+	if (depth < 0) {
+	    throw new IllegalArgumentException(String.format("positiv value or 0 expected, but was %s", depth));
 	}
 	// Maximale Tiefe erreicht
-	if (deep == 0) {
+	if (depth == 0) {
 	    System.out.println(String.format("%s heuristic max=%s", board, heuristic()));
 	    return heuristic();
 	}
@@ -51,7 +51,7 @@ public class MinMaxNode {
 	}
 	int best = Integer.MIN_VALUE;
 	for (MinMaxNode child : getChildren()) {
-	    int val = child.min(deep - 1);
+	    int val = child.min(depth - 1);
 	    if (val > best) {
 		best = val;
 		maxChild = child;
