@@ -58,11 +58,10 @@ public class BoardTUI {
             System.out.println("Geben sie ihre auswahl in der Reihenfolge X,Y an:");
             BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
             String s = bufferRead.readLine();
-            Turn t = splitInput(s);
-            boolean legitTurn = b.setStone(t.getColor(), t.getX(), t.getY());
+            boolean legitTurn = b.setStone(splitInput(s));
             if (legitTurn) {
-                t = ai.nextTurn(b);
-                b.setStone(t.getColor(), t.getX(), t.getY());
+
+                b.setStone(ai.nextTurn(b));
             }
 
             this.loop(b);

@@ -17,6 +17,7 @@ public interface Board {
      * @return if turn is valid
      */
     public boolean setStone(Color color, int x, int y);
+    public boolean setStone(Turn turn);
 
     public Set<Board> getNextPosibleStates();
 

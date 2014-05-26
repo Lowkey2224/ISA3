@@ -61,6 +61,8 @@ public class BoardImpl implements Board, Heuristicable {
     }
 
     public boolean setStone(Turn turn) {
+        if(turn == null || turn.getColor() == Color.EMPTY)
+            return false;
         return this.setStone(turn.getColor(), turn.getX(), turn.getY());
     }
 
