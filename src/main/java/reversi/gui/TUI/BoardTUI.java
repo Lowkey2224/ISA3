@@ -60,8 +60,9 @@ public class BoardTUI {
             String s = bufferRead.readLine();
             boolean legitTurn = b.setStone(splitInput(s));
             if (legitTurn) {
-
                 b.setStone(ai.nextTurn(b));
+            }else{
+                System.out.println("Zug war nicht konform. Versuchen sie es erneut");
             }
 
             this.loop(b);

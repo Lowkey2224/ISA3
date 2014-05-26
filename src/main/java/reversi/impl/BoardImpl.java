@@ -112,7 +112,7 @@ public class BoardImpl implements Board, Heuristicable {
         if (t == null || (lastTurn != null && t.getColor() == lastTurn.getColor())) {
             return false;
         }
-        if (t.getX() < 0 || t.getX() > this.boardSize || t.getY() < 0 || t.getY() > this.boardSize) {
+        if (t.getX() < 0 || t.getX() >= this.boardSize || t.getY() < 0 || t.getY() >= this.boardSize) {
             return false;
         }
         if (this.tiles[t.getX()][t.getY()] != Color.EMPTY) {
