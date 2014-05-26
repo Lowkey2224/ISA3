@@ -1,9 +1,16 @@
 package reversi.gui.TUI;
 
 import reversi.ai.AIPlayer;
+import reversi.ai.impl.AIPlayerImpl;
 import reversi.api.Board;
 import reversi.api.Color;
+import reversi.api.Turn;
 import reversi.impl.BoardImpl;
+import reversi.impl.TurnImpl;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 /**
  * Created by marcus on 26.05.14.
@@ -22,14 +29,12 @@ public class BoardTUI {
         this.width = width;
         this.height = height;
         this.board = new BoardImpl(width);
+        ai = new AIPlayerImpl(Color.BLACK, 4);
         this.loop(this.board);
     }
 
     private void drawState(Board b)
     {
-        b.setStone(Color.BLACK, 0,1);
-        b.setStone(Color.WHITE, 0,2);
-        b.setStone(Color.BLACK, 1,1);
         for (int y = 0; y < this.height; y++) {
             for (int x = 0; x < this.width; x++) {
                 System.out.print(FIELD_TOP);
@@ -47,15 +52,23 @@ public class BoardTUI {
             System.out.print("\n");
         }
 
-        System.out.println("GIEF STONE");
-
     }
 
     private void loop(Board b)
     {
         this.drawState(b);
-
-//        System.in.read()
+        System.out.println("Geben sie ihre auswahl in der Reihenfolge X,Y an:");
+        BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
+        try {
+            String s = bufferRead.readLine();
+            Turn t = splitInput(s);
+            b.setStone(t.getColor(), t.getX(),t.getY());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Turn t = ai.nextTurn(b);
+        b.setStone(t.getColor(), t.getX(),t.getY());
+        this.loop(b);
     }
 
     private String showColor(Color c)
@@ -66,5 +79,17 @@ public class BoardTUI {
         if(c == Color.WHITE)
             return "O";
         return " ";
+    }
+
+    private Turn splitInput(String in){
+        String s = in.trim();
+        if(s.length() != 3)
+        {
+            return null;
+        }
+        String[] coords = s.split(",");
+        int x = Integer.parseInt(coords[0]);
+        int y = Integer.parseInt(coords[1]);
+        return new TurnImpl(x, y, Color.WHITE);
     }
 }
