@@ -24,8 +24,7 @@ public class BoardTUI {
     private final static String FIELD_TOP = "___";
     private final static String FIELD_SIDE = "|";
 
-    public BoardTUI(int width, int height)
-    {
+    public BoardTUI(int width, int height) {
         this.width = width;
         this.height = height;
         this.board = new BoardImpl(width);
@@ -33,8 +32,7 @@ public class BoardTUI {
         this.loop(this.board);
     }
 
-    private void drawState(Board b)
-    {
+    private void drawState(Board b) {
         for (int y = 0; y < this.height; y++) {
             for (int x = 0; x < this.width; x++) {
                 System.out.print(FIELD_TOP);
@@ -42,7 +40,7 @@ public class BoardTUI {
             System.out.print("\n");
             for (int x = 0; x < this.width; x++) {
                 System.out.print(FIELD_SIDE);
-                System.out.print(showColor(b.getColor(x,y)));
+                System.out.print(showColor(b.getColor(x, y)));
                 System.out.print(FIELD_SIDE);
             }
             System.out.print("\n");
@@ -54,37 +52,37 @@ public class BoardTUI {
 
     }
 
-    private void loop(Board b)
-    {
-        this.drawState(b);
-        System.out.println("Geben sie ihre auswahl in der Reihenfolge X,Y an:");
-        BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
+    private void loop(Board b) {
         try {
+            this.drawState(b);
+            System.out.println("Geben sie ihre auswahl in der Reihenfolge X,Y an:");
+            BufferedReader bufferRead = new BufferedReader(new InputStreamReader(System.in));
             String s = bufferRead.readLine();
             Turn t = splitInput(s);
-            b.setStone(t.getColor(), t.getX(),t.getY());
+            boolean legitTurn = b.setStone(t.getColor(), t.getX(), t.getY());
+            if (legitTurn) {
+                t = ai.nextTurn(b);
+                b.setStone(t.getColor(), t.getX(), t.getY());
+            }
+
+            this.loop(b);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Turn t = ai.nextTurn(b);
-        b.setStone(t.getColor(), t.getX(),t.getY());
-        this.loop(b);
     }
 
-    private String showColor(Color c)
-    {
+    private String showColor(Color c) {
 
-        if(c == Color.BLACK)
+        if (c == Color.BLACK)
             return "X";
-        if(c == Color.WHITE)
+        if (c == Color.WHITE)
             return "O";
         return " ";
     }
 
-    private Turn splitInput(String in){
+    private Turn splitInput(String in) {
         String s = in.trim();
-        if(s.length() != 3)
-        {
+        if (s.length() != 3) {
             return null;
         }
         String[] coords = s.split(",");
