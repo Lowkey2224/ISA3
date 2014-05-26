@@ -29,8 +29,7 @@ public class BoardImpl implements Board, Heuristicable {
         }
     }
 
-    private BoardImpl(int boardSize, Color[][] state)
-    {
+    private BoardImpl(int boardSize, Color[][] state) {
         this.tiles = new Color[boardSize][boardSize];
         this.boardSize = boardSize;
         for (int i = 0; i < this.boardSize; i++) {
@@ -41,22 +40,17 @@ public class BoardImpl implements Board, Heuristicable {
     }
 
     @Override
-    public boolean setStone(Color color, int x, int y)
-    {
+    public boolean setStone(Color color, int x, int y) {
         Turn t = new TurnImpl(x, y, color);
-        if(!this.isTurnValid(t))
-        {
+        if (!this.isTurnValid(t)) {
             return false;
         }
         this.tiles[x][y] = color;
         //Change Color of adjacent tiles.
-        for(int i = x-1; i <= x+1; i++)
-        {
-            for (int j = y-1; j <= y+1; j++)
-            {//If they are legit fields
-                if (x > 0 && x < this.boardSize && y > 0 && y < this.boardSize) {
-                    if(this.tiles[i][j] != Color.EMPTY)
-                    {
+        for (int i = x - 1; i <= x + 1; i++) {
+            for (int j = y - 1; j <= y + 1; j++) {//If they are legit fields
+                if (i >= 0 && i < this.boardSize && j >= 0 && j < this.boardSize) {
+                    if (this.tiles[i][j] != Color.EMPTY) {
                         this.tiles[i][j] = color;
                     }
                 }
@@ -66,20 +60,19 @@ public class BoardImpl implements Board, Heuristicable {
         return true;
     }
 
-    public boolean setStone(Turn turn)
-    {
+    public boolean setStone(Turn turn) {
         return this.setStone(turn.getColor(), turn.getX(), turn.getY());
     }
 
     @Override
     public Set<Board> getNextPosibleStates() {
         Set<Board> set = new HashSet<Board>();
-        Color c = (lastTurn.getColor() == Color.WHITE)?Color.BLACK: Color.WHITE;
+        Color c = (lastTurn.getColor() == Color.WHITE) ? Color.BLACK : Color.WHITE;
         for (int i = 0; i < this.boardSize; i++) {
             for (int j = 0; j < this.boardSize; j++) {
                 if (this.tiles[i][j] == Color.EMPTY) {
                     Board b = new BoardImpl(this.boardSize, this.tiles);
-                    b.setStone(c, i,j);
+                    b.setStone(c, i, j);
                     set.add(b);
                 }
             }
@@ -113,8 +106,10 @@ public class BoardImpl implements Board, Heuristicable {
         return this.tiles[x][y];
     }
 
-    private boolean isTurnValid(Turn t)
-    {
+    private boolean isTurnValid(Turn t) {
+        if (t == null || (lastTurn != null && t.getColor() == lastTurn.getColor())) {
+            return false;
+        }
         if (t.getX() < 0 || t.getX() > this.boardSize || t.getY() < 0 || t.getY() > this.boardSize) {
             return false;
         }
@@ -129,19 +124,18 @@ public class BoardImpl implements Board, Heuristicable {
         return lastTurn;
     }
 
-    public boolean equals(Object o)
-    {
-        if (o == null){
+    public boolean equals(Object o) {
+        if (o == null) {
             return false;
         }
-        if(o instanceof Board){
+        if (o instanceof Board) {
             Board b = (Board) o;
-            if(this.boardSize != b.getBoardSize()){
+            if (this.boardSize != b.getBoardSize()) {
                 return false;
             }
             for (int x = 0; x < this.boardSize; x++) {
                 for (int y = 0; y < this.boardSize; y++) {
-                    if (this.tiles[x][y] != b.getColor(x,y)) {
+                    if (this.tiles[x][y] != b.getColor(x, y)) {
                         return false;
                     }
                 }
