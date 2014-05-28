@@ -31,4 +31,5 @@ public interface Board {
 
     public Color getColor(int x, int y);
 
+    public boolean isFinished();
 }

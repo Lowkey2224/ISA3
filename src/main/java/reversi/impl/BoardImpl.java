@@ -155,4 +155,16 @@ public class BoardImpl implements Board, Heuristicable {
     public int getValue() {
         return this.heuristic.getValue(this);
     }
+
+    public boolean isFinished()
+    {
+        for (int x = 0; x < this.boardSize; x++) {
+            for (int y = 0; y < this.boardSize; y++) {
+                if (this.tiles[x][y] == Color.EMPTY) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 }

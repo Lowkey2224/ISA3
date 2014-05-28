@@ -64,8 +64,24 @@ public class BoardTUI {
             }else{
                 System.out.println("Zug war nicht konform. Versuchen sie es erneut");
             }
+            if(b.isFinished())
+            {
+                System.out.println("Das Spiel ist zuende. Der Spielstand lautet:");
+                int white = b.getNumberOfStones(Color.WHITE);
+                int black = b.getNumberOfStones(Color.BLACK);
+                System.out.println("Sie: " + white+ " Gegner: " + black);
+                if(black>white){
+                    System.out.println("Sie haben verloren");
+                }else if(white==black)
+                {
+                    System.out.println("Unentschieden!");
+                }else{
+                    System.out.println("Sie haben gewonnen!!");
+                }
+            }else{
+                this.loop(b);
+            }
 
-            this.loop(b);
         } catch (IOException e) {
             e.printStackTrace();
         }
