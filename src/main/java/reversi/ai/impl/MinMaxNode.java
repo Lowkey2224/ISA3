@@ -29,7 +29,7 @@ public class MinMaxNode {
         int best = Integer.MIN_VALUE;
         for (MinMaxNode child : getChildren()) {
             int val = child.min();
-            if (val > best) {
+            if (val >= best) {
                 best = val;
                 maxChild = child;
             }
@@ -50,13 +50,15 @@ public class MinMaxNode {
         }
         // Ist Blattknoten
         else if (getChildren().size() == 0) {
-            System.out.println(String.format("%s eval max=%s", board, eval()));
+            if (LOG_LEVEL == LogLevel.Debug) {
+                System.out.println(String.format("%s eval max=%s", board, eval()));
+            }
             return eval();
         }
         int best = Integer.MIN_VALUE;
         for (MinMaxNode child : getChildren()) {
             int val = child.min(depth - 1);
-            if (val > best) {
+            if (val >= best) {
                 best = val;
                 maxChild = child;
             }
@@ -95,7 +97,9 @@ public class MinMaxNode {
         }
         // Ist Blattknoten
         else if (getChildren().size() == 0) {
-            System.out.println(String.format("%s eval min=%s", board, eval()));
+            if (LOG_LEVEL == LogLevel.Debug) {
+                System.out.println(String.format("%s eval min=%s", board, eval()));
+            }
             return eval();
         }
         int best = Integer.MAX_VALUE;
