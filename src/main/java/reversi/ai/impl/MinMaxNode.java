@@ -145,7 +145,7 @@ public class MinMaxNode {
     private Set<MinMaxNode> getChildren() {
         if (children == null) {
             children = new HashSet<MinMaxNode>();
-            Set<Board> boards = board.getNextPosibleStates();
+            Set<Board> boards = board.getNextPossibleStates(color);
             Color otherColor = color.getOtherColor();
             for (Board board : boards) {
                 children.add(new MinMaxNode(board, otherColor));

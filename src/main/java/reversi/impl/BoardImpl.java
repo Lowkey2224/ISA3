@@ -67,14 +67,13 @@ public class BoardImpl implements Board, Heuristicable {
     }
 
     @Override
-    public Set<Board> getNextPosibleStates() {
+    public Set<Board> getNextPossibleStates(Color color) {
         Set<Board> set = new HashSet<Board>();
-        Color c = (lastTurn.getColor() == Color.WHITE) ? Color.BLACK : Color.WHITE;
         for (int i = 0; i < this.boardSize; i++) {
             for (int j = 0; j < this.boardSize; j++) {
                 if (this.tiles[i][j] == Color.EMPTY) {
                     Board b = new BoardImpl(this.boardSize, this.tiles);
-                    b.setStone(c, i, j);
+                    b.setStone(color, i, j);
                     set.add(b);
                 }
             }

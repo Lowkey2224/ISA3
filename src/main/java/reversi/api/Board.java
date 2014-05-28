@@ -19,7 +19,7 @@ public interface Board {
     public boolean setStone(Color color, int x, int y);
     public boolean setStone(Turn turn);
 
-    public Set<Board> getNextPosibleStates();
+    public Set<Board> getNextPossibleStates(Color color);
 
     public Turn getLastTurn();
 
