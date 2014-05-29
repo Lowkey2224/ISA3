@@ -3,8 +3,6 @@ package reversi.impl;
 import reversi.api.Color;
 import reversi.api.Turn;
 
-import java.util.Objects;
-
 /**
  * Created by Loki on 22.05.2014.
  */

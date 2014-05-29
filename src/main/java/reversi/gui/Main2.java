@@ -16,9 +16,11 @@ public class Main2 {
         int size=Integer.valueOf(bufferRead.readLine());
         System.out.println("Wie viele Züge soll der Computer vorrausdenken?");
         int searchDepth=Integer.valueOf(bufferRead.readLine());
+        System.out.println("Soll der AB Schnitt angewendet werden (Ja/Nein)?");
+        boolean abEnabled=bufferRead.readLine().equalsIgnoreCase("Ja");
         System.out.println("Wollen Sie anfangen (Ja/Nein)?");
-        String choice=bufferRead.readLine();
+        boolean playerbegins=bufferRead.readLine().equalsIgnoreCase("Ja");
         System.out.println("Das Spiel beginnt: \n");
-        new BoardTUI2(size,searchDepth, choice.toLowerCase().equals("ja"));
+        new BoardTUI2(size,searchDepth, playerbegins, abEnabled);
     }
 }

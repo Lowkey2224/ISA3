@@ -22,11 +22,11 @@ public class BoardTUI2 {
     private int width;
     private int height;
 
-    public BoardTUI2(int boardSize, int searchDepth ,boolean playerBegins) {
+    public BoardTUI2(int boardSize, int searchDepth ,boolean playerBegins, boolean abEnabled) {
         this.width = boardSize;
         this.height = boardSize;
         this.board = new BoardImpl(boardSize);
-        ai = new AIPlayerImpl(Color.BLACK, searchDepth);
+        ai = new AIPlayerImpl(Color.BLACK, searchDepth, abEnabled);
         if(playerBegins){
             this.playWithPlayerFirst(board);
         }else{

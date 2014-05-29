@@ -9,7 +9,7 @@ public class AIPlayerImpl implements AIPlayer {
     private final Color myColor;
     private final int searchDeep;
 
-    public AIPlayerImpl(Color color, int searchDeep) {
+    public AIPlayerImpl(Color color, int searchDeep, boolean abEnabled) {
 	myColor = color;
 	this.searchDeep = searchDeep;
     }
@@ -17,6 +17,10 @@ public class AIPlayerImpl implements AIPlayer {
     @Override
     public Turn nextTurn(Board board) {
 	MinMaxNode minMaxNode = new MinMaxNode(board, myColor);
-	return minMaxNode.getBestTurn(searchDeep);
+	long start=System.currentTimeMillis(); 
+	Turn best=minMaxNode.getBestTurn(searchDeep);
+	System.out.println(String.format("Der Computer hat %s Milisekungen lang überlegt.", System.currentTimeMillis()-start));
+	return best;
+	
     }
 }

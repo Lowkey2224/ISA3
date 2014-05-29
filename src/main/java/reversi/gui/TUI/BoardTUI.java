@@ -28,7 +28,7 @@ public class BoardTUI {
         this.width = width;
         this.height = height;
         this.board = new BoardImpl(width);
-        ai = new AIPlayerImpl(Color.BLACK, 4);
+        ai = new AIPlayerImpl(Color.BLACK, 4,true);
         this.loop(this.board);
     }
 

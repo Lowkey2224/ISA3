@@ -20,23 +20,43 @@ public class MinMaxNode {
         this.board = board;
         this.color = color;
     }
-
-    private int max() {
-        // Blattknoten
-        if (getChildren().size() == 0) {
-            eval();
-        }
-        int best = Integer.MIN_VALUE;
-        for (MinMaxNode child : getChildren()) {
-            int val = child.min();
-            if (val >= best) {
-                best = val;
-                maxChild = child;
-            }
-        }
-        return best;
+    private int maxAB(int alpha, int beta, int depth){
+    	 if (depth < 0) {
+             throw new IllegalArgumentException(String.format("positiv value or 0 expected, but was %s", depth));
+         }
+         // Maximale Tiefe erreicht
+         if (depth == 0) {
+             if (LOG_LEVEL == LogLevel.Debug) {
+                 System.out.println(String.format("%s heuristic max=%s", board, heuristic()));
+             }
+             return heuristic();
+         }
+         // Ist Blattknoten
+         else if (getChildren().size() == 0) {
+             if (LOG_LEVEL == LogLevel.Debug) {
+                 System.out.println(String.format("%s eval max=%s", board, eval()));
+             }
+             return eval();
+         }
+         int best = Integer.MIN_VALUE;
+         for (MinMaxNode child : getChildren()) {
+        	 if(best>alpha){
+        		 alpha=best;
+        	 }
+             int val = child.minAB(alpha,beta,depth - 1);
+             if (val >= best) {
+                 best = val;
+                 maxChild = child;
+             }
+             if(best>=beta){
+            	 return best;
+             }
+         }
+         if (LOG_LEVEL == LogLevel.Debug) {
+             System.out.println(String.format("%s  max=%s child=%s", board, best, maxChild));
+         }
+         return best;
     }
-
     private int max(int depth) {
         if (depth < 0) {
             throw new IllegalArgumentException(String.format("positiv value or 0 expected, but was %s", depth));
@@ -68,22 +88,45 @@ public class MinMaxNode {
         }
         return best;
     }
-
-    private int min() {
-        // Blattknoten
-        if (getChildren().size() == 0) {
+    private int minAB(int alpha, int beta, int deep) {
+        if (deep < 0) {
+            throw new IllegalArgumentException(String.format("positiv value or 0 expected, but was %s", deep));
+        }
+        // Maximale Tiefe erreicht
+        if (deep == 0) {
+            if (LOG_LEVEL == LogLevel.Debug) {
+                System.out.println(String.format("%s heuristic min=%s", board, heuristic()));
+            }
+            return heuristic();
+        }
+        // Ist Blattknoten
+        else if (getChildren().size() == 0) {
+            if (LOG_LEVEL == LogLevel.Debug) {
+                System.out.println(String.format("%s eval min=%s", board, eval()));
+            }
             return eval();
         }
         int best = Integer.MAX_VALUE;
         for (MinMaxNode child : getChildren()) {
-            int val = child.max();
+        	if(best<beta){
+        		beta=best;
+        	}
+            int val = child.maxAB(alpha, beta,deep - 1);
             if (val < best) {
                 best = val;
+                minChild = child;
+            }
+            if(alpha>=best){
+            	return best;
             }
         }
+        if (LOG_LEVEL == LogLevel.Debug) {
+            System.out.println(String.format("%s  min=%s child=%s", board, best, minChild));
+        }
+
         return best;
     }
-
+    
     private int min(int deep) {
         if (deep < 0) {
             throw new IllegalArgumentException(String.format("positiv value or 0 expected, but was %s", deep));
@@ -153,9 +196,13 @@ public class MinMaxNode {
         }
         return children;
     }
-
-    public Turn getBestTurn(int searchDeep) {
-        max(searchDeep);
+    public Turn getBestABTurn(int searchDepth){
+    	maxAB(Integer.MIN_VALUE, Integer.MAX_VALUE,searchDepth);
+        Board boardOfChild = maxChild.board;
+        return boardOfChild.getLastTurn();
+    }
+    public Turn getBestTurn(int searchDepth) {
+        max(searchDepth);
         Board boardOfChild = maxChild.board;
         return boardOfChild.getLastTurn();
     }
